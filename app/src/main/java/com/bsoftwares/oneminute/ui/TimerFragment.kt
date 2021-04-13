@@ -1,0 +1,87 @@
+package com.bsoftwares.oneminute.ui
+
+import android.media.MediaPlayer
+import android.os.Build
+import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.content.getSystemService
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import com.bsoftwares.oneminute.R
+import com.bsoftwares.oneminute.databinding.FragmentTimerBinding
+import com.bsoftwares.oneminute.util.BuzzType
+import com.bsoftwares.oneminute.util.buzz
+import com.bsoftwares.oneminute.viewModel.TimerViewModel
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_timer.*
+
+/**
+ * A simple [Fragment] subclass as the default destination in the navigation.
+ */
+class TimerFragment : Fragment() {
+
+    private val viewModel: TimerViewModel by lazy {
+        val activity = requireNotNull(this.activity)
+        ViewModelProvider(
+            this,
+            TimerViewModel.Factory(activity.application)
+        ).get(TimerViewModel::class.java)
+    }
+
+    override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        val binding = FragmentTimerBinding.inflate(inflater)
+
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.remainingTime.observe(viewLifecycleOwner, Observer {remainingTime ->
+            if (viewModel.settings.value!!.vibration){
+                when (remainingTime){
+                    in 1..5 -> {
+                        buzz(BuzzType.COUNTDOWN_PANIC.pattern,activity)
+                    }
+                    viewModel.settings.value!!.timer/2 -> {
+                        buzz(BuzzType.HALF_WAY.pattern,activity)
+                    }
+                    0 -> {
+                        buzz(BuzzType.GAME_OVER.pattern,activity)
+                    }
+                }
+            }
+            if (viewModel.settings.value!!.sound){
+                when (remainingTime){
+                    in 1..5 -> {
+                        MediaPlayer.create(context,R.raw.song1).start()
+                    }
+                    viewModel.settings.value!!.timer/2 -> {
+                        MediaPlayer.create(context,R.raw.song3).start()
+                    }
+                    0 -> {
+                        MediaPlayer.create(context,R.raw.song2).start()
+                    }
+                }
+            }
+        })
+
+        text_time.setOnClickListener {
+            findNavController().navigate(R.id.action_Home_to_Settings)
+        }
+    }
+
+}

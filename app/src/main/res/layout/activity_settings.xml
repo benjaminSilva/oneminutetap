@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.bsoftwares.oneminute.viewModel.SettingsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/box_inset_layout_padding"
+        tools:context=".ui.SettingsActivity"
+        android:background="@color/colorPrimary">
+
+        <Button
+            android:id="@+id/btn_lessTime"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/big_ass_margin"
+            android:layout_marginBottom="@dimen/big_ass_margin"
+            android:background="@color/colorPrimaryDark"
+            android:onClick="@{() -> viewModel.timerController(false)}"
+            android:padding="@dimen/huge_margin"
+            android:textAlignment="textStart"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_currentTime"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btn_currentTime" />
+
+        <Button
+            android:id="@+id/btn_addTime"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/big_ass_margin"
+            android:layout_marginBottom="@dimen/big_ass_margin"
+            android:background="@color/colorPrimaryDark"
+            android:onClick="@{() -> viewModel.timerController(true)}"
+            android:padding="@dimen/huge_margin"
+            android:textAlignment="textEnd"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_currentTime"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toTopOf="@+id/btn_currentTime" />
+
+        <Button
+            android:id="@+id/btn_currentTime"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/btn_background"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:onClick="onBack"
+            android:text="@{String.valueOf(viewModel.settings.timer)}"
+            android:textColor="@color/white"
+            android:textSize="35sp"
+            android:elevation="5dp"
+            android:translationZ="5dp"
+            android:stateListAnimator="@null"
+            app:layout_constraintBottom_toTopOf="@+id/guideline5"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="2dp"
+            android:text="-"
+            android:textColor="@color/white"
+            android:textSize="50sp"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_lessTime"
+            app:layout_constraintEnd_toStartOf="@+id/btn_currentTime"
+            app:layout_constraintStart_toStartOf="@+id/btn_lessTime"
+            app:layout_constraintTop_toTopOf="@+id/btn_lessTime" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="2dp"
+            android:text="+"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_addTime"
+            app:layout_constraintEnd_toEndOf="@+id/btn_addTime"
+            app:layout_constraintStart_toEndOf="@+id/btn_currentTime"
+            app:layout_constraintTop_toTopOf="@+id/btn_addTime" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.25" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.75" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.25" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.75" />
+
+
+        <ImageButton
+            android:id="@+id/btn_volume"
+            checked="@{@drawable/ic_volume_on}"
+            isChecked="@{viewModel.settings.sound}"
+            notChecked="@{@drawable/ic_volume_off}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_background"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:onClick="@{() -> viewModel.soundController()}"
+            android:padding="18dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn_replay"
+            app:layout_constraintTop_toBottomOf="@+id/btn_currentTime"
+            tools:srcCompat="@drawable/ic_volume_on" />
+
+        <ImageButton
+            android:id="@+id/btn_vibration"
+            checked="@{@drawable/ic_vibration_on}"
+            isChecked="@{viewModel.settings.vibration}"
+            notChecked="@{@drawable/ic_vibration_off}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_background"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:onClick="@{() -> viewModel.vibrationController()}"
+            android:padding="18dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_replay"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_currentTime"
+            tools:srcCompat="@drawable/ic_vibration_on" />
+
+        <ImageButton
+            android:id="@+id/btn_replay"
+            checked="@{@drawable/ic_replay_on}"
+            isChecked="@{viewModel.settings.repeat}"
+            notChecked="@{@drawable/ic_replay_off}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_background"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:onClick="@{() -> viewModel.replayController()}"
+            android:padding="18dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_volume"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btn_vibration"
+            app:layout_constraintTop_toBottomOf="@+id/btn_currentTime"
+            tools:srcCompat="@drawable/ic_replay_on" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/text_background"
+            android:elevation="5dp"
+            android:onClick="@{() -> viewModel.resetSettings()}"
+            android:text="@string/reset"
+            android:textColor="@color/white"
+            android:layout_margin="@dimen/mid_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
