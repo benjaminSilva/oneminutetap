@@ -21,8 +21,8 @@ class TimerRepository(private val dataBase: TimerDataBase) {
         withContext(Dispatchers.IO){
             try {
                 dataBase.timerDAO.updateSettings(settings.toDatabase())
-            }catch (t:Throwable){
-                Log.d("Teste",t.message!!)
+            }catch (t:Exception){
+                Log.d("Database Error",t.message!!)
             }
         }
     }

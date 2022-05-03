@@ -1,25 +1,19 @@
 package com.bsoftwares.oneminute.ui
 
 import android.media.MediaPlayer
-import android.os.Build
 import android.os.Bundle
-import android.os.VibrationEffect
-import android.os.Vibrator
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.getSystemService
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.bsoftwares.oneminute.R
 import com.bsoftwares.oneminute.databinding.FragmentTimerBinding
 import com.bsoftwares.oneminute.util.BuzzType
 import com.bsoftwares.oneminute.util.buzz
 import com.bsoftwares.oneminute.viewModel.TimerViewModel
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_timer.*
 
 /**
@@ -38,7 +32,7 @@ class TimerFragment : Fragment() {
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         val binding = FragmentTimerBinding.inflate(inflater)
 
@@ -56,11 +50,14 @@ class TimerFragment : Fragment() {
                     in 1..5 -> {
                         buzz(BuzzType.COUNTDOWN_PANIC.pattern,activity)
                     }
-                    viewModel.settings.value!!.timer/2 -> {
+                    viewModel.max.value!!/2 -> {
                         buzz(BuzzType.HALF_WAY.pattern,activity)
                     }
                     0 -> {
                         buzz(BuzzType.GAME_OVER.pattern,activity)
+                    }
+                    viewModel.max.value -> {
+                        buzz(BuzzType.COUNTDOWN_PANIC.pattern,activity)
                     }
                 }
             }
@@ -69,11 +66,14 @@ class TimerFragment : Fragment() {
                     in 1..5 -> {
                         MediaPlayer.create(context,R.raw.song1).start()
                     }
-                    viewModel.settings.value!!.timer/2 -> {
+                    viewModel.max.value!!/2 -> {
                         MediaPlayer.create(context,R.raw.song3).start()
                     }
                     0 -> {
                         MediaPlayer.create(context,R.raw.song2).start()
+                    }
+                    viewModel.max.value -> {
+                        MediaPlayer.create(context,R.raw.song4).start()
                     }
                 }
             }

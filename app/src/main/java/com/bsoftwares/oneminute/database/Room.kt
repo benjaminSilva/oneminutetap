@@ -16,10 +16,16 @@ interface TimerDao{
     fun updateSettings(vararg settings : SettingsDB)
 }
 
-@Database(entities = [SettingsDB::class], version = 1)
+/*@Database(entities = [SettingsDB::class], version = 1)
+abstract class TimerDataBase : RoomDatabase() {
+    abstract val timerDAO : TimerDao
+}*/
+
+@Database(entities = [SettingsDB::class], version = 2,autoMigrations = [AutoMigration(from = 1,to = 2)])
 abstract class TimerDataBase : RoomDatabase() {
     abstract val timerDAO : TimerDao
 }
+
 
 private lateinit var INSTANCE : TimerDataBase
 

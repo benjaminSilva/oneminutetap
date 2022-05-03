@@ -139,10 +139,27 @@
             android:onClick="@{() -> viewModel.soundController()}"
             android:padding="18dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_random"
             app:layout_constraintStart_toEndOf="@+id/btn_replay"
             app:layout_constraintTop_toBottomOf="@+id/btn_currentTime"
             tools:srcCompat="@drawable/ic_volume_on" />
+
+        <ImageButton
+            android:id="@+id/btn_random"
+            checked="@{@drawable/ic_replay_on}"
+            isChecked="@{viewModel.settings.random}"
+            notChecked="@{@drawable/ic_replay_off}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_background"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:onClick="@{() -> viewModel.randomController()}"
+            android:padding="18dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn_volume"
+            app:layout_constraintTop_toBottomOf="@+id/btn_currentTime"
+            tools:srcCompat="@drawable/ic_replay_on" />
 
         <ImageButton
             android:id="@+id/btn_vibration"

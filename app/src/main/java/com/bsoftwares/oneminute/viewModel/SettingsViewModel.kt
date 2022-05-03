@@ -32,6 +32,10 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         get() = _replay
     private val _replay = MutableLiveData<String>()
 
+    val dialog : LiveData<Boolean>
+        get() = _dialog
+    private val _dialog = MutableLiveData(false)
+
     fun timerController(mais : Boolean) {
         val newSettings = settings.value
         if (mais)
@@ -66,6 +70,26 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         updateSettings(newSettings)
     }
 
+    fun randomController(){
+        _dialog.value = true
+    }
+
+    fun turnRandomOff(){
+        _dialog.value = false
+        val newSettings = settings.value!!
+        newSettings.random = false
+        updateSettings(newSettings)
+    }
+
+    fun setMinMax(min : Int, max : Int){
+        val newSettings = settings.value
+        newSettings!!.min = min
+        newSettings.max = max
+        newSettings.random = true
+        _dialog.value = false
+        updateSettings(newSettings)
+    }
+
     fun replayController(){
         val newSettings = settings.value
         if (!newSettings!!.repeat)
@@ -92,6 +116,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         newSettings.repeat = false
         newSettings.sound = true
         newSettings.vibration = true
+        newSettings.random = false
         newSettings.timer = 60
         updateSettings(newSettings)
     }

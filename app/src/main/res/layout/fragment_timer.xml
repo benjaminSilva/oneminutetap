@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.bsoftwares.oneminute.viewModel.TimerViewModel" />
@@ -14,20 +15,21 @@
         android:layout_height="match_parent"
         tools:context=".ui.TimerFragment">
 
-        <Button
+        <com.bsoftwares.oneminute.ui.CustomButton
             android:id="@+id/btn_timer"
+            pulse="@{viewModel.btn_text}"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="@dimen/big_ass_margin"
             android:background="@drawable/btn_background"
+            android:elevation="5dp"
+            android:gravity="center"
             android:longClickable="true"
             android:onClick="@{ () -> viewModel.restartTimer()}"
-            android:text="@{viewModel.btn_text}"
+            android:stateListAnimator="@null"
             android:textColor="@color/white"
             android:textSize="35sp"
-            android:elevation="5dp"
             android:translationZ="5dp"
-            android:stateListAnimator="@null"
             app:layout_constraintBottom_toTopOf="@+id/guideline5"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
@@ -41,10 +43,10 @@
             style="@style/Widget.MaterialProgressBar.ProgressBar"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:max="@{viewModel.settings.timer}"
-            android:progress="@{viewModel.remainingTime}"
-            android:foregroundTint="@color/colorPrimaryDark"
             android:backgroundTint="@color/colorPrimaryDark"
+            android:foregroundTint="@color/colorPrimaryDark"
+            android:max="@{viewModel.max}"
+            android:progress="@{viewModel.remainingTime}"
             android:progressTint="@color/colorPrimaryDark"
             app:layout_constraintBottom_toTopOf="@+id/guideline5"
             app:layout_constraintDimensionRatio="1:1"
@@ -82,20 +84,22 @@
 
         <TextView
             android:id="@+id/text_time"
+            maxTime="@{viewModel.max}"
+            settings="@{viewModel.settings}"
+            viewModel="@{viewModel}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{@string/currentTimer(viewModel.settings.timer)}"
+            android:background="@drawable/text_background"
+            android:elevation="5dp"
+            android:padding="@dimen/big_margin"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:elevation="5dp"
-            android:padding="@dimen/big_margin"
-            android:background="@drawable/text_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_volume"
-            tools:text="Tempo"/>
+            tools:text="Tempo" />
 
         <ImageButton
             android:id="@+id/btn_volume"

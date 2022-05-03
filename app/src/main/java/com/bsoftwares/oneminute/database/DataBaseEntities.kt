@@ -13,7 +13,10 @@ data class SettingsDB constructor(
     val timer : Int?,
     val vibration : Int?,
     val sound : Int?,
-    val repeat : Int?
+    val repeat : Int?,
+    val random : Int?,
+    val min : Int?,
+    val max : Int?
 )
 fun SettingsDB.toDomain() : TimerSettings{
     return TimerSettings(
@@ -21,6 +24,9 @@ fun SettingsDB.toDomain() : TimerSettings{
         timer = timer!!,
         vibration = vibration == 1,
         sound = sound == 1,
-        repeat = repeat == 1
+        repeat = repeat == 1,
+        random = random == 1,
+        max = max ?: 0,
+        min = min ?: 0
     )
 }
